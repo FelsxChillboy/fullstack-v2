@@ -23,4 +23,80 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
+
+/* --- PMII Button Animations --- */
+.btn-pmii {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.btn-pmii::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), transparent 40%),
+              radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 45%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.btn-pmii::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -40%;
+  width: 60%;
+  height: 240%;
+  transform: rotate(25deg) translateX(-140%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  transition: transform 500ms ease;
+  pointer-events: none;
+}
+
+.btn-pmii:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.btn-pmii:hover::before {
+  opacity: 1;
+}
+
+.btn-pmii:hover::after {
+  transform: rotate(25deg) translateX(240%);
+}
+
+.btn-pmii:active {
+  transform: translateY(0px) scale(0.96);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+/* Ripple effect */
+.btn-ripple span.ripple {
+  position: absolute;
+  border-radius: 9999px;
+  transform: scale(0);
+  animation: ripple 600ms ease-out;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* offset untuk navbar sticky */
+}
+
+
