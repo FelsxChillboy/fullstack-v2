@@ -1,4 +1,5 @@
-﻿import { prisma } from "@/lib/prisma";
+﻿import type { DownloadFile } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +20,7 @@ export default async function DownloadPage() {
       </div>
 
       <div className="mt-8 space-y-4">
-        {files.map((f) => (
+        {files.map((f:DownloadFile) => (
           <Card key={f.id} className="rounded-2xl border-white/10 bg-white/5">
             <CardContent className="p-5 flex items-center justify-between gap-4">
               <div className="min-w-0">
