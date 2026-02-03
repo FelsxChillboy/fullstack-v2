@@ -94,7 +94,8 @@ body {
   }
 }
 
-html {
+html,
+body {
   scroll-behavior: smooth;
   scroll-padding-top: 90px; /* offset untuk navbar sticky */
 }

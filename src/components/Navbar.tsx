@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
+
 const items = [
   { label: "Home", href: "/" },
   { label: "Gallery", href: "/gallery" },
@@ -19,7 +20,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-[#0A2AA8]/90 backdrop-blur border-b border-white/10">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between text-white">
         <Link href="/" className="font-bold text-xl">
-          PB PMII
+          PR PMII RAYON TEKNIK
         </Link>
 
         <nav className="hidden lg:flex gap-8 text-sm text-white/90">

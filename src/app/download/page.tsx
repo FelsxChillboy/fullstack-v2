@@ -1,11 +1,7 @@
-﻿import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+﻿import { prisma } from "@/lib/prisma";
 
 export default async function DownloadPage() {
-  const files = await prisma.downloadFile.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const files = await prisma.downloadFile.findMany({ orderBy: { createdAt: "desc" } });
 
   return (
     <main className="py-10 max-w-4xl">
@@ -22,9 +18,7 @@ export default async function DownloadPage() {
           >
             <div className="font-semibold">{f.title}</div>
             <div className="text-sm text-white/70 mt-1">{f.fileName}</div>
-            <div className="text-xs text-white/60 mt-2">
-              {new Date(f.createdAt).toLocaleString()}
-            </div>
+            <div className="text-xs text-white/60 mt-2">{new Date(f.createdAt).toLocaleString()}</div>
           </a>
         ))}
 

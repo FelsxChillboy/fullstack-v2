@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
+import { Instagram } from "lucide-react";
 
 const nav = [
   { label: "Home", href: "/" },
@@ -27,58 +28,6 @@ export default function Home() {
       <div className="absolute inset-0 bg-black/55" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.10),transparent_45%)]" />
 
-      {/* Logo + title (top-left) */}
-      <div className="absolute left-6 top-6 z-20 flex items-start gap-3">
-        <Image
-          src="/logo-pmii.png"
-          alt="Logo PMII"
-          width={56}
-          height={56}
-          className="rounded-full"
-          priority
-        />
-        <div className="leading-tight">
-          <div className="text-sm font-semibold tracking-wide text-white/90">
-            PR PMII TEKNIK
-          </div>
-          <div className="text-lg font-extrabold tracking-wide">
-            UNUSIA JAKARTA PUSAT
-          </div>
-        </div>
-      </div>
-
-      {/* Navbar pill (TOP-RIGHT) */}
-      <div className="absolute top-6 right-6 z-20 hidden md:block">
-        <div className="rounded-full border border-yellow-300/35 bg-yellow-400/20 backdrop-blur-xl px-3 py-2 shadow-2xl">
-          <div className="flex items-center gap-2">
-            {nav.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={
-                  "px-5 py-2 rounded-full text-sm font-semibold tracking-wide transition " +
-                  (item.label === "Home"
-                    ? "bg-yellow-400 text-black shadow"
-                    : "text-white/90 hover:bg-white/10")
-                }
-              >
-                {item.label.toUpperCase()}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile nav */}
-      <div className="absolute top-6 right-6 z-20 md:hidden">
-        <Link
-          href="/about"
-          className="rounded-full border border-white/25 bg-white/10 backdrop-blur px-4 py-2 text-sm font-semibold"
-        >
-          Menu →
-        </Link>
-      </div>
-
       {/* Hero text */}
       <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 z-20 max-w-4xl">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] drop-shadow">
@@ -105,14 +54,18 @@ export default function Home() {
 
             <div className="flex items-center gap-6 text-white/90">
               <a
-                href="https://facebook.com"
+                href="https://instagram.com/rayonteknikunusia"
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center gap-2 hover:text-white transition"
               >
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 border border-white/15">
-                  f
+                  <Instagram size={20} />
                 </span>
+
                 <span className="text-sm font-medium">@rayonteknikunusia</span>
               </a>
+
 
               <a
                 href="mailto:rayonteknikunusia@gmail.com"
@@ -129,7 +82,7 @@ export default function Home() {
                 className="flex items-center gap-2 hover:text-white transition"
               >
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 border border-white/15">
-                  ⌁
+                  F
                 </span>
                 <span className="text-sm font-medium">@rayonteknikunusia</span>
               </a>
