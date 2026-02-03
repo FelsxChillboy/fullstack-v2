@@ -12,7 +12,7 @@ export default async function DownloadPage() {
         {files.map((file) => (
           <div key={file.id} className="border p-3 rounded">
             <div className="font-semibold">{file.title}</div>
-            <a className="text-blue-600 underline" href={file.url}>
+            <a className="text-blue-600 underline" href={file.fileUrl}>
               Download
             </a>
           </div>

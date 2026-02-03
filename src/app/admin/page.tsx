@@ -1,12 +1,14 @@
 ﻿"use client";
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 
 export default function AdminPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [author, setAuthor] = useState("");
 
-  async function createPost(e) {
+  async function createPost(e: FormEvent) {
     e.preventDefault();
 
     await fetch("/api/posts", {
@@ -30,10 +32,10 @@ export default function AdminPage() {
 
       <form onSubmit={createPost} className="space-y-3 mt-6">
         <input
-          className="w-full border p-2 rounded"
-          placeholder="Judul"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder="Nama penulis (contoh: Admin / Ketua Rayon)"
+          className="w-full p-3 rounded-lg text-black"
         />
 
         <textarea

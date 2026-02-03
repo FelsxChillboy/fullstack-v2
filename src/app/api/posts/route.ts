@@ -1,14 +1,6 @@
 ﻿import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
-  const posts = await prisma.post.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-
-  return NextResponse.json(posts);
-}
-
 export async function POST(req: Request) {
   const body = await req.json();
 
@@ -16,6 +8,7 @@ export async function POST(req: Request) {
     data: {
       title: body.title,
       content: body.content,
+      author: body.author ?? "Admin", // ✅ wajib
     },
   });
 

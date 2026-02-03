@@ -14,9 +14,10 @@ const nav = [
 
 export default function Home() {
   return (
-    <div className="relative h-screen w-full overflow-hidden text-white">
+    <div className="relative min-h-screen [calc(100vh-80px)] w-full overflow-hidden text-white">
       {/* Background */}
       <Image
+      
         src="/hero-bg.jpg"
         alt="PMII Background"
         fill

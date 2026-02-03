@@ -14,7 +14,7 @@ export default async function TeamPage() {
         {team.map((m) => (
           <div key={m.id} className="border rounded overflow-hidden">
             <Image
-              src={m.photoUrl}
+              src={m.photoUrl ?? "/team/logo-pmii.png"}
               alt={m.name}
               width={800}
               height={600}
