@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import type { TeamMember } from "@prisma/client";
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/).slice(0, 2);
@@ -28,7 +29,7 @@ export default async function TeamPage() {
       </div>
 
       <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {team.map((m) => (
+        {team.map((m:TeamMember) => (
           <Card
             key={m.id}
             className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 transition"

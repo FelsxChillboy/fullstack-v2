@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import type { GalleryImage } from "@prisma/client";
+
 
 export default async function GalleryPage() {
   const images = await prisma.galleryImage.findMany({
@@ -20,7 +22,7 @@ export default async function GalleryPage() {
       </div>
 
       <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {images.map((img) => (
+        {images.map((img:GalleryImage) => (
           <Dialog key={img.id}>
             <DialogTrigger asChild>
               <Card className="overflow-hidden rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 transition cursor-pointer">

@@ -2,6 +2,8 @@
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import type { Post } from "@prisma/client";
+
 
 export default async function UpdatePage() {
   const posts = await prisma.post.findMany({
@@ -19,7 +21,7 @@ export default async function UpdatePage() {
       </div>
 
       <div className="mt-8 space-y-4">
-        {posts.map((p) => (
+        {posts.map((p:Post) => (
           <Link key={p.id} href={`/update/${p.id}`}>
             <Card className="rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 transition">
               <CardContent className="p-5">
