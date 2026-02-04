@@ -18,7 +18,7 @@ const socials = [
   },
   {
     label: "WhatsApp",
-    href: "https://wa.me/081292675810",
+    href: "https://wa.me/6281292675810",
     icon: PhoneCall,
     value: "Chat WhatsApp",
     external: true,
