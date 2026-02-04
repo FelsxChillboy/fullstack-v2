@@ -28,7 +28,7 @@ export default async function GalleryPage() {
         <div className="flex items-start justify-between gap-6">
           <div className="flex items-start gap-4">
             <div className="leading-tight">
-              <h1 className="mt-5 text-2xl md:text-3xl font-extrabold text-center">
+              <h1 className="mt-5 text-2xl md:text-3xl font-extrabold">
                 Gallery
               </h1>
               <p className="mt-2 text-sm text-white/80 max-w-xl text-center">

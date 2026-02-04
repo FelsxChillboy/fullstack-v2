@@ -13,24 +13,23 @@ export const metadata: Metadata = {
   icons: { icon: "/logo-pmii.png" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="id">
-      <body className="min-h-screen bg-[#0c1431] text-white flex flex-col">
+    <html lang="en">
+      <body className="min-h-screen w-full bg-[#060b20] text-white">
         <NextTopLoader showSpinner={false} />
         <ScrollToTop />
 
         <SiteNavbar />
 
-        {/* main ngisi sisa layar, footer nempel di bawah */}
-        <main className="flex-1">
-          <div className="mx-auto max-w-7xl px-6 h-full">
-            <PageTransition>{children}</PageTransition>
-          </div>
-        </main>
+        <PageTransition>{children}</PageTransition>
 
         <Footer />
       </body>
     </html>
-  );
+  );  
 }
