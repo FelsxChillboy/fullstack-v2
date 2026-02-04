@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen w-full bg-[#060b20] text-white">
+      <body className="min-h-[100svh] w-full bg-[#060b20] text-white">
         <NextTopLoader showSpinner={false} />
         <ScrollToTop />
 
@@ -31,5 +31,5 @@ export default function RootLayout({
         <Footer />
       </body>
     </html>
-  );  
+  );
 }
