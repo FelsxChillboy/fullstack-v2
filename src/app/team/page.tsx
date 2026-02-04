@@ -1,80 +1,33 @@
-﻿export const dynamic = "force-dynamic";
-
-
-import Image from "next/image";
+﻿import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import type { TeamMember } from "@prisma/client";
 
-function pickTopThree(team: TeamMember[]) {
-  // prioritas: yang role mengandung "ketua" jadi center.
-  const ketuaIndex = team.findIndex((m) => m.role?.toLowerCase().includes("ketua"));
-  let center: TeamMember | null = null;
+export const dynamic = "force-dynamic";
 
-  const rest = [...team];
-  if (ketuaIndex >= 0) {
-    center = rest.splice(ketuaIndex, 1)[0];
-  } else {
-    center = rest.shift() ?? null;
-  }
-
-  const left = rest.shift() ?? null;
-  const right = rest.shift() ?? null;
-
-  return { center, left, right, remaining: rest };
-}
-
-function ProfileCard({
-  member,
-  size = "md",
-}: {
-  member: TeamMember;
-  size?: "lg" | "md";
-}) {
-  const isLg = size === "lg";
-
-  // fallback kalau schema kamu belum punya field ini: aman
-  const anyM = member as any;
-  const instagram: string | null = anyM.instagram ?? null;
-  const whatsapp: string | null = anyM.whatsapp ?? null;
-
+/* Card Component */
+function ProfileCard({ member }: { member: TeamMember }) {
   return (
     <div className="flex flex-col items-center text-center">
-      {/* frame kuning + foto */}
-      <div
-        className={[
-          "relative overflow-hidden bg-[#E09B19] border-2 border-white/90",
-          "rounded-[28px]",
-          isLg ? "w-[220px] h-[280px]" : "w-[200px] h-[260px]",
-        ].join(" ")}
-      >
-        {/* Foto */}
-        <div className="absolute inset-0">
-          {member.photoUrl ? (
-            <Image
-              src={member.photoUrl}
-              alt={member.name}
-              fill
-              className="object-cover object-top"
-              sizes={isLg ? "220px" : "200px"}
-              priority={isLg}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-black font-extrabold">
-              NO PHOTO
-            </div>
-          )}
-        </div>
-
-        {/* sedikit gelap biar foto “nendang” seperti poster */}
-        <div className="absolute inset-0 bg-black/10" />
+      {/* Frame */}
+      <div className="relative w-[200px] h-[260px] rounded-[28px] overflow-hidden bg-[#E09B19] border-2 border-white">
+        {member.photoUrl ? (
+          <Image
+            src={member.photoUrl}
+            alt={member.name}
+            fill
+            className="object-cover object-top"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center font-bold text-black">
+            NO PHOTO
+          </div>
+        )}
       </div>
 
-      {/* Text bawah */}
-      <div className="mt-4 text-[10px] uppercase tracking-[0.14em] leading-4 text-white/90">
+      {/* Text */}
+      <div className="mt-4 text-[11px] uppercase tracking-widest leading-5 text-white">
         <div className="font-extrabold">{member.name}</div>
-        <div className="text-white/80">{member.role}</div>
-        {instagram ? <div className="text-white/70">INSTAGRAM : {instagram}</div> : null}
-        {whatsapp ? <div className="text-white/70">WHATSAPP : {whatsapp}</div> : null}
+        <div className="text-white/70">{member.role}</div>
       </div>
     </div>
   );
@@ -85,57 +38,96 @@ export default async function TeamPage() {
     orderBy: [{ order: "asc" }, { createdAt: "asc" }],
   });
 
-  const { center, left, right, remaining } = pickTopThree(team);
+  /* ========================= */
+  /* Ambil Ketua, Sekretaris, Bendahara */
+  /* ========================= */
+  const ketua = team.find((m) =>
+    m.role.toLowerCase().includes("ketua rayon")
+  );
+
+  const sekretaris = team.find((m) =>
+    m.role.toLowerCase().includes("sekretaris")
+  );
+
+  const bendahara = team.find((m) =>
+    m.role.toLowerCase().includes("bendahara")
+  );
+
+  /* ========================= */
+  /* Wakil Ketua 1-3 */
+  /* ========================= */
+  const wakilKetua = team.filter((m) =>
+    m.role.toLowerCase().includes("wakil ketua")
+  );
+
+  /* ========================= */
+  /* Sisanya masuk grid bawah */
+  /* ========================= */
+  const lainnya = team.filter(
+    (m) =>
+      !m.role.toLowerCase().includes("ketua rayon") &&
+      !m.role.toLowerCase().includes("sekretaris") &&
+      !m.role.toLowerCase().includes("bendahara") &&
+      !m.role.toLowerCase().includes("wakil ketua")
+  );
 
   return (
     <main
-      className="min-h-screen relative text-white overflow-hidden"
+      className="min-h-screen text-white relative overflow-hidden"
       style={{
         backgroundImage: "url('/bg-about.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* overlay gelap */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/60" />
 
-      <div className="relative z-10 px-6 py-8">
-        {/* Header kiri */}
-        <div className="flex items-start justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="leading-tight">
-              <h1 className="mt-5 text-2xl md:text-3xl font-extrabold text-center">
-                Struktur Kepengurusan
-              </h1>
-              <p className="mt-2 text-sm text-white/80 max-w-xl text-center">
-                Struktur kepengurusan PR PMII Rayon Teknik UNUSIA Jakarta Pusat.
-              </p>
-            </div>
-          </div>
+      <div className="relative z-10 px-10 py-10">
+        {/* Title */}
+        <h1 className="text-3xl font-extrabold">
+          Struktur Kepengurusan
+        </h1>
+        <p className="text-white/70 mt-2">
+          Struktur kepengurusan PR PMII Rayon Teknik UNUSIA Jakarta Pusat.
+        </p>
+
+        {/* ===================== */}
+        {/* BARIS 1: Sekretaris - Ketua - Bendahara */}
+        {/* ===================== */}
+        <div className="mt-16 flex justify-center gap-14 flex-wrap items-start">
+          {sekretaris && <ProfileCard member={sekretaris} />}
+
+          {ketua && <ProfileCard member={ketua} />}
+
+          {bendahara && <ProfileCard member={bendahara} />}
         </div>
 
-        {/* 3 card utama */}
-        <div className="mt-12 flex justify-center gap-6">
-          {left ? <ProfileCard member={left} size="md" /> : null}
-          {center ? <ProfileCard member={center} size="lg" /> : null}
-          {right ? <ProfileCard member={right} size="md" /> : null}
-        </div>
-
-        {/* remaining members (opsional) */}
-        {remaining.length > 0 && (
-          <div className="mt-10">
-            <h2 className="text-xl font-bold mb-4 text-center">Pengurus Lainnya</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {remaining.map((m) => (
-                <ProfileCard key={m.id} member={m} size="md" />
-              ))}
-            </div>
+        {/* ===================== */}
+        {/* BARIS 2: Wakil Ketua 1-3 */}
+        {/* ===================== */}
+        {wakilKetua.length > 0 && (
+          <div className="mt-20 flex justify-center gap-12 flex-wrap">
+            {wakilKetua.slice(0, 3).map((m) => (
+              <ProfileCard key={m.id} member={m} />
+            ))}
           </div>
         )}
 
-        {team.length === 0 && (
-          <div className="mt-12 text-center text-white/80">
-            Belum ada data pengurus. Tambahkan lewat Prisma Studio (TeamMember).
+        {/* ===================== */}
+        {/* BARIS BAWAH: Pengurus lainnya */}
+        {/* ===================== */}
+        {lainnya.length > 0 && (
+          <div className="mt-24">
+            <h2 className="text-xl font-bold tracking-widest uppercase text-white/80 mb-10">
+              Koordinator & Anggota
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 justify-items-center">
+              {lainnya.map((m) => (
+                <ProfileCard key={m.id} member={m} />
+              ))}
+            </div>
           </div>
         )}
       </div>
