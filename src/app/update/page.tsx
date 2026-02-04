@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { Post } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
 
 export default async function UpdatePage() {
   const posts = await prisma.post.findMany({

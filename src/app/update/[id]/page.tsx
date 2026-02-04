@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default async function UpdateDetail({ params }: { params: { id: string } }) {
   const post = await prisma.post.findUnique({
     where: { id: params.id },
