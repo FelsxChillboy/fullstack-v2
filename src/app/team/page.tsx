@@ -58,9 +58,9 @@ export default async function TeamPage() {
   /* ========================= */
   /* Sisanya masuk grid bawah */
   /* ========================= */
- const lainnya = team.filter((m) => ![ketua?.id, sekretaris?.id, bendahara?.id].includes(m.id) &&
-  !m.role.toLowerCase().includes("wakil"));
-
+  const lainnya = team.filter((m) => ![ketua?.id, sekretaris?.id, bendahara?.id].includes(m.id) &&
+    !m.role.toLowerCase().includes("wakil"));
+  
 
   return (
     <main
