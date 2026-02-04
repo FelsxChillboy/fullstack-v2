@@ -41,35 +41,26 @@ export default async function TeamPage() {
   /* ========================= */
   /* Ambil Ketua, Sekretaris, Bendahara */
   /* ========================= */
-  const ketua = team.find((m) =>
-    m.role.toLowerCase().includes("ketua rayon")
-  );
+  const ketua =
+    team.find((m) => m.name.toLowerCase().includes("ahmad azarruddin")) ??
+    team.find((m) => m.role.toLowerCase().includes("ketua"));
 
-  const sekretaris = team.find((m) =>
-    m.role.toLowerCase().includes("sekretaris")
-  );
 
-  const bendahara = team.find((m) =>
-    m.role.toLowerCase().includes("bendahara")
-  );
+  const sekretaris = team.find((m) => m.role.toLowerCase().includes("sekretaris"));
+  const bendahara = team.find((m) => m.role.toLowerCase().includes("bendahara"));
+
 
   /* ========================= */
   /* Wakil Ketua 1-3 */
   /* ========================= */
-  const wakilKetua = team.filter((m) =>
-    m.role.toLowerCase().includes("wakil ketua")
-  );
+  const wakilKetua = team.filter((m) => m.role.toLowerCase().includes("wakil"));
 
   /* ========================= */
   /* Sisanya masuk grid bawah */
   /* ========================= */
-  const lainnya = team.filter(
-    (m) =>
-      !m.role.toLowerCase().includes("ketua rayon") &&
-      !m.role.toLowerCase().includes("sekretaris") &&
-      !m.role.toLowerCase().includes("bendahara") &&
-      !m.role.toLowerCase().includes("wakil ketua")
-  );
+ const lainnya = team.filter((m) => ![ketua?.id, sekretaris?.id, bendahara?.id].includes(m.id) &&
+  !m.role.toLowerCase().includes("wakil"));
+
 
   return (
     <main
