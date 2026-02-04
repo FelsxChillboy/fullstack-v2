@@ -4,6 +4,8 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import type { GalleryImage } from "@prisma/client";
 
+export const dynamic = "force-dynamic"; 
+
 export default async function GalleryPage() {
   const images = await prisma.galleryImage.findMany({
     orderBy: { createdAt: "desc" },
