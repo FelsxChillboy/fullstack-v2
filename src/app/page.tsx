@@ -66,13 +66,13 @@ export default function Home() {
             </a>
 
             <a
-              href="https://wa.me/6281292675810"
+              href="https://facebook.com"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 hover:text-white transition"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 border border-white/15">
-                
+                F
               </span>
               <span className="text-sm font-medium">Facebook</span>
             </a>
