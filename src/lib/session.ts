@@ -1,32 +1,28 @@
+import "server-only";
 import { cookies } from "next/headers";
-import crypto from "crypto";
 
 const COOKIE_NAME = "session";
-const SECRET = process.env.SESSION_SECRET || "dev-secret-change";
 
-function sign(userId: string) {
-  return crypto.createHmac("sha256", SECRET).update(userId).digest("hex");
+export async function getSessionCookie() {
+  const store = await cookies();
+  return store.get(COOKIE_NAME)?.value ?? null;
 }
 
-export function setSession(userId: string) {
-  const value = `${userId}.${sign(userId)}`;
-  cookies().set(COOKIE_NAME, value, {
+export async function setSessionCookie(value: string) {
+  const store = await cookies();
+  store.set(COOKIE_NAME, value, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
     path: "/",
   });
 }
 
-export function getSessionUserId(): string | null {
-  const raw = cookies().get(COOKIE_NAME)?.value;
-  if (!raw) return null;
-  const [userId, sig] = raw.split(".");
-  if (!userId || !sig) return null;
-  if (sign(userId) !== sig) return null;
-  return userId;
+export async function clearSessionCookie() {
+  const store = await cookies();
+  store.delete(COOKIE_NAME);
 }
 
-export function clearSession() {
-  cookies().set(COOKIE_NAME, "", { path: "/", maxAge: 0 });
-}
+// alias biar route lama tetap jalan
+export const setSession = setSessionCookie;
+export const clearSession = clearSessionCookie;

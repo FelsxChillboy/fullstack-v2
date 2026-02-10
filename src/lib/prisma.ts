@@ -1,22 +1,30 @@
 import "server-only";
-import { Pool } from "pg";
+
 import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-  throw new Error("DATABASE_URL is missing in .env");
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined;
 }
 
-// supaya dev Next.js (hot reload) gak bikin banyak koneksi
-const globalForPrisma = globalThis as unknown as {
-  prisma?: PrismaClient;
-};
+// SSL hanya dipakai kalau DATABASE_URL mengindikasikan butuh SSL
+const needsSsl =
+  process.env.DATABASE_URL?.includes("sslmode=require") ||
+  process.env.DATABASE_URL?.includes("ssl=true");
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: needsSsl ? { rejectUnauthorized: false } : undefined,
+});
+
+const adapter = new PrismaPg(pool);
 
 export const prisma =
-  globalForPrisma.prisma ??
+  global.prisma ||
   new PrismaClient({
-    adapter: new PrismaPg(new Pool({ connectionString })),
+    adapter,
   });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") global.prisma = prisma;

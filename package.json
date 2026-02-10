@@ -11,7 +11,7 @@
     "start": "prisma migrate deploy && next start -p ${PORT:-3000}",
     "postinstall": "prisma generate",
     "migrate:deploy": "prisma migrate deploy"
-  },  
+  },
   "dependencies": {
     "@prisma/client": "^7.3.0",
     "@radix-ui/react-dialog": "^1.1.15",
