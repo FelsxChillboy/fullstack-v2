@@ -13,7 +13,9 @@ model User {
   password  String
   role      Role     @default(USER)
   createdAt DateTime @default(now())
-  posts     Post[]
+
+  profile MemberProfile?
+  posts   Post[]
 }
 
 model Post {
@@ -47,6 +49,20 @@ model DownloadFile {
   fileUrl   String
   fileName  String
   createdAt DateTime @default(now())
+}
+
+model MemberProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  memberNumber String   @unique
+  fullName     String
+  rayon        String?
+  komisariat   String?
+  fakultas     String?
+  periode      String?
+  createdAt    DateTime @default(now())
 }
 
 enum Role {

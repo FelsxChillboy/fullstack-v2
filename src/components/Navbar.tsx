@@ -19,6 +19,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-[#0A2AA8]/90 backdrop-blur border-b border-white/10">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between text-white">
+        <div className="flex gap-4">
+          <Link href="/login">Login</Link>
+          <Link href="/register">Daftar</Link>
+        </div>
+
         <Link href="/" className="font-bold text-xl">
           PR PMII RAYON TEKNIK
         </Link>
