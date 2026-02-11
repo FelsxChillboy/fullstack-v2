@@ -87,9 +87,9 @@ export default async function TeamPage() {
         {/* BARIS 1: Sekretaris - Ketua - Bendahara */}
         {/* ===================== */}
         <div className="mt-16 flex justify-center gap-14 flex-wrap items-start">
-          {sekretaris && <ProfileCard member={sekretaris} />}
-
           {ketua && <ProfileCard member={ketua} />}
+
+          {sekretaris && <ProfileCard member={sekretaris} />}
 
           {bendahara && <ProfileCard member={bendahara} />}
         </div>
