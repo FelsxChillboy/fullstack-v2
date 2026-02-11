@@ -3,7 +3,7 @@ export default function AboutPage() {
     <main
       className="min-h-screen flex flex-col items-center justify-start text-white px-6 py-16 relative"
       style={{
-        backgroundImage: "url('/bg-about.png')",
+        backgroundImage: "url('/')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
