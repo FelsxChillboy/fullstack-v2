@@ -8,9 +8,9 @@ export async function getSessionCookie() {
   return store.get(COOKIE_NAME)?.value ?? null;
 }
 
-export async function setSessionCookie(value: string) {
+export async function setSession(userId: string) {
   const store = await cookies();
-  store.set(COOKIE_NAME, value, {
+  store.set(COOKIE_NAME, userId, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -18,11 +18,7 @@ export async function setSessionCookie(value: string) {
   });
 }
 
-export async function clearSessionCookie() {
+export async function clearSession() {
   const store = await cookies();
   store.delete(COOKIE_NAME);
 }
-
-// alias biar route lama tetap jalan
-export const setSession = setSessionCookie;
-export const clearSession = clearSessionCookie;

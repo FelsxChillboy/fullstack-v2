@@ -1,52 +1,82 @@
 ﻿"use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const r = useRouter();
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    setErr(null);
+    setError("");
     setLoading(true);
 
-    const form = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(form.entries());
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+      const data = await res.json();
 
-    setLoading(false);
+      if (!res.ok) {
+        setError(data?.error ?? "Login gagal");
+        return;
+      }
 
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) return setErr(data.error ?? "Login gagal");
-
-    r.push("/member/card");
+      // redirect sesuai role
+      if (data.role === "ADMIN") router.push("/dashboard/admin");
+      else router.push("/dashboard");
+    } catch {
+      setError("Terjadi kesalahan jaringan");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <main className="min-h-[100svh] w-full px-4 py-10 text-white">
-      <div className="mx-auto w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-6">
-        <h1 className="text-2xl font-bold">Login</h1>
-        <p className="mt-1 text-white/70 text-sm">Masuk untuk melihat kartu anggota.</p>
+    <main className="min-h-screen flex items-center justify-center px-4">
+      <form
+        onSubmit={handleLogin}
+        className="w-full max-w-sm rounded-2xl border border-white/10 bg-white/5 p-6 shadow"
+      >
+        <h1 className="text-xl font-semibold">Login</h1>
+        <p className="mt-1 text-sm opacity-70">Masuk untuk membuka dashboard.</p>
 
-        {err && <div className="mt-4 rounded-xl bg-red-500/15 border border-red-500/30 p-3 text-sm">{err}</div>}
+        <div className="mt-5 space-y-3">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-3">
-          <input name="email" type="email" placeholder="Email" className="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3" />
-          <input name="password" type="password" placeholder="Password" className="w-full rounded-xl bg-black/30 border border-white/10 px-4 py-3" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-          <button disabled={loading} className="w-full rounded-xl bg-yellow-400 text-black font-semibold py-3 disabled:opacity-60">
+          {error && <div className="text-sm text-red-400">{error}</div>}
+
+          <button
+            disabled={loading}
+            className="w-full rounded-lg bg-white/90 px-3 py-2 text-black font-medium disabled:opacity-60"
+          >
             {loading ? "Memproses..." : "Login"}
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </main>
   );
 }
