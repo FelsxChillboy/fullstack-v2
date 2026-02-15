@@ -38,8 +38,8 @@ export default function AboutPage() {
             </h2>
 
             <p className="uppercase text-sm leading-relaxed text-gray-200">
-              Membangun kader yang progresif, intelektual, dan berdayaguna
-              bagi kampus serta masyarakat.
+              Mewujudkan rayon PMI Teknik Unusia sebagai ruang kaderisasi digital yang kreatif
+              , renponsif, dan beraswaja.
             </p>
           </div>
 
@@ -53,9 +53,10 @@ export default function AboutPage() {
             </h2>
 
             <ul className="uppercase text-sm leading-relaxed text-gray-200 space-y-3 list-disc pl-5">
-              <li>Penguatan kaderisasi dan keilmuan</li>
-              <li>Pengabdian dan aksi sosial yang berdampak</li>
-              <li>Kolaborasi kegiatan internal dan eksternal</li>
+              <li>membangun sebuah sistem pelatihan yang memanfaatkan digital, sosial media, dan pendidikan daring.</li>
+              <li>Mendorong kader agar cakap menggunakan teknologi informasi baik untuk akademik, organisasi, maupun gerakan sosial.</li>
+              <li>Memperkuat komunikasi, koordinasi, dan persaudaraan kader melalui ruang virtual maupun tatap muka.</li>
+              <li>Menumbuhkan budaya riset, karya teknologi, dan ide kreatif yang relevan dengan era indrustri 4.0.</li>
             </ul>
           </div>
         </section>
