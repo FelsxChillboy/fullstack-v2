@@ -1,17 +1,17 @@
 ﻿import Image from "next/image";
 
 const team = [
-  { name: "Anggota 1", role: "Pengurus", photoUrl: "/foto-1.jpg" },
-  { name: "Anggota 2", role: "Pengurus", photoUrl: "/foto-2.jpg" },
-  { name: "Anggota 3", role: "Pengurus", photoUrl: "/foto-3.jpg" },
-  { name: "Anggota 4", role: "Pengurus", photoUrl: "/foto-4.jpg" },
-  { name: "Anggota 5", role: "Pengurus", photoUrl: "/foto-5.jpg" },
-  { name: "Anggota 6", role: "Pengurus", photoUrl: "/foto-6.jpeg" },
-  { name: "Anggota 7", role: "Pengurus", photoUrl: "/foto-7.jpg" },
-  { name: "Anggota 8", role: "Pengurus", photoUrl: "/foto-8.jpg" },
-  { name: "Anggota 9", role: "Pengurus", photoUrl: "/foto-11.jpg" },
-  { name: "Anggota 10", role: "Pengurus", photoUrl: "/foto-18.jpg" },
-  { name: "Anggota 11", role: "Pengurus", photoUrl: "/foto-19.jpg" },
+  { name: "ketua Rayon", role: "ketua Rayon", photoUrl: "/foto-1.jpg" },
+  { name: "Sekretaris Rayon", role: "Sekretaris Rayon", photoUrl: "/foto-2.jpg" },
+  { name: "Bendahara Rayon", role: "Bendahara Rayon", photoUrl: "/foto-3.jpg" },
+  { name: "Wakil ketua I", role: "Wakil ketua I", photoUrl: "/foto-4.jpg" },
+  { name: "Wakil ketua II", role: "Wakil ketua II", photoUrl: "/foto-5.jpg" },
+  { name: "Wakil ketua III", role: "Wakil ketua III", photoUrl: "/foto-6.jpeg" },
+  { name: "Ketua biro kaderisasi", role: "Ketua biro kaderisasi", photoUrl: "/foto-7.jpg" },
+  { name: "Ketua biro media", role: "Ketua biro media", photoUrl: "/foto-8.jpg" },
+  { name: "anggota biro kaderisasi", role: "anggota biro kaderisasi", photoUrl: "/foto-11.jpg" },
+  { name: "anggota kaderisasi", role: "anggota kaderisasi", photoUrl: "/foto-18.jpg" },
+  { name: "anggota biro kaderisasi", role: "anggota biro kaderisasi", photoUrl: "/foto-19.jpg" },
 ];
 
 function ProfileCard({ member }: { member: typeof team[number] }) {
