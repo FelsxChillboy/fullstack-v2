@@ -1,16 +1,22 @@
 ﻿import Image from "next/image";
-import { prisma } from "@/lib/prisma";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import type { GalleryImage } from "@prisma/client";
 
-export const dynamic = "force-dynamic"; 
+const images = [
+  { src: "/gallery/foto1.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto2.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto3.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto4.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto5.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto6.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto7.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto8.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto9.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto10.jpg", title: "Dokumentasi" },
+  { src: "/gallery/foto11.jpg", title: "Dokumentasi" },
+];
 
-export default async function GalleryPage() {
-  const images = await prisma.galleryImage.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-
+export default function GalleryPage() {
   return (
     <main
       className="min-h-screen relative text-white overflow-hidden"
@@ -20,21 +26,15 @@ export default async function GalleryPage() {
         backgroundPosition: "center",
       }}
     >
-      {/* Overlay gelap biar kontras */}
       <div className="absolute inset-0 bg-black/60" />
 
       <div className="relative z-10 px-6 md:px-10 py-10">
-        {/* Header */}
         <div className="flex items-start justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="leading-tight">
-              <h1 className="mt-5 text-2xl md:text-3xl font-extrabold">
-                Gallery
-              </h1>
-              <p className="mt-2 text-sm text-white/80 max-w-xl text-center">
-                Dokumentasi kegiatan PMII Teknik UNUSIA.
-              </p>
-            </div>
+          <div className="leading-tight">
+            <h1 className="mt-5 text-2xl md:text-3xl font-extrabold">Gallery</h1>
+            <p className="mt-2 text-sm text-white/80 max-w-xl text-center">
+              Dokumentasi kegiatan PMII Teknik UNUSIA.
+            </p>
           </div>
 
           <Badge className="bg-yellow-400 text-black hover:bg-yellow-400">
@@ -42,85 +42,30 @@ export default async function GalleryPage() {
           </Badge>
         </div>
 
-        {/* Grid */}
         <section className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {images.map((img: GalleryImage) => {
-            const title = img.title ?? "Foto kegiatan";
-            const created = new Date(img.createdAt).toLocaleDateString("id-ID", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            });
-
-            // kalau schema kamu punya field ini, otomatis kepakai
-            const anyImg = img as any;
-            const location: string | null = anyImg.location ?? null;
-            const description: string | null = anyImg.description ?? null;
-
-            return (
-              <Dialog key={img.id}>
-                <DialogTrigger asChild>
-                  <button className="text-left">
-                    <div className="rounded-[28px] border-2 border-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:scale-[1.01] transition">
-                      {/* gambar */}
-                      <div className="relative w-full aspect-[4/3]">
-                        <Image
-                          src={img.url}
-                          alt={title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                        />
-                      </div>
-
-                      {/* panel kuning */}
-                      <div className="bg-[#E09B19] px-6 py-5">
-                        <div className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-white leading-5">
-                          <div>NAMA KEGIATAN : {title}</div>
-                          {location ? <div>LOKASI : {location}</div> : null}
-                          <div>TANGGAL : {created}</div>
-                          {description ? (
-                            <div className="mt-2">{description}</div>
-                          ) : (
-                            <div className="mt-2">PENJELASAN SINGKAT KEGIATAN</div>
-                          )}
-                        </div>
-                      </div>
+          {images.map((img, i) => (
+            <Dialog key={img.src}>
+              <DialogTrigger asChild>
+                <button className="text-left">
+                  <div className="rounded-[28px] border-2 border-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:scale-[1.01] transition">
+                    <div className="relative w-full h-[260px]">
+                      <Image src={img.src} alt={img.title} fill className="object-cover" />
                     </div>
-                  </button>
-                </DialogTrigger>
-
-                {/* Dialog Preview */}
-                <DialogContent className="max-w-4xl bg-[#060b20] border-white/10 p-0 overflow-hidden">
-                  <div className="relative w-full aspect-[16/10] bg-black/20">
-                    <Image
-                      src={img.url}
-                      alt={title}
-                      fill
-                      className="object-contain"
-                      sizes="100vw"
-                    />
+                    <div className="p-4 bg-black/40">
+                      <div className="text-sm font-semibold">{img.title} #{i + 1}</div>
+                      <div className="text-xs text-white/70">PMII Teknik UNUSIA</div>
+                    </div>
                   </div>
-                  <div className="p-4 text-white">
-                    <div className="font-semibold text-lg">{title}</div>
-                    <div className="text-sm text-white/70 mt-1">{created}</div>
-                    {location ? (
-                      <div className="text-sm text-white/70 mt-1">{location}</div>
-                    ) : null}
-                    {description ? (
-                      <div className="text-sm text-white/80 mt-3">{description}</div>
-                    ) : null}
-                  </div>
-                </DialogContent>
-              </Dialog>
-            );
-          })}
+                </button>
+              </DialogTrigger>
 
-          {images.length === 0 && (
-            <div className="rounded-2xl border-2 border-white/30 bg-white/5 p-6 text-white/80">
-              Belum ada foto. Tambahkan lewat Prisma Studio (GalleryImage).
-            </div>
-          )}
+              <DialogContent className="max-w-3xl bg-black/80 border border-white/10">
+                <div className="relative w-full h-[70vh]">
+                  <Image src={img.src} alt={img.title} fill className="object-contain" />
+                </div>
+              </DialogContent>
+            </Dialog>
+          ))}
         </section>
       </div>
     </main>
