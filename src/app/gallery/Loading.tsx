@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Loading() {
   const [fade, setFade] = useState(false);
@@ -8,14 +9,21 @@ export default function Loading() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setFade(true);
-    }, 2000);
+    }, 2000); // 2 detik tampil
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className={`loader-wrapper ${fade ? "fade-out" : ""}`}>
-      <img src="/logo-pmii.png" alt="Logo PMII Teknik UNUSIA" className="loader-logo" />
+      <Image
+        src="/logo.png"
+        alt="Logo PMII Teknik UNUSIA"
+        width={130}
+        height={130}
+        priority
+        className="loader-logo"
+      />
     </div>
   );
 }
