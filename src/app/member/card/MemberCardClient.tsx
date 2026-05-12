@@ -2,7 +2,16 @@
 
 import type { User } from "@prisma/client";
 
-export default function MemberCardClient({ members }: { members: User[] }) {
+export type MemberCardUser = Pick<
+  User,
+  "id" | "name" | "email" | "role" | "createdAt"
+>;
+
+export default function MemberCardClient({
+  members,
+}: {
+  members: MemberCardUser[];
+}) {
   return (
     <main className="min-h-screen px-4 py-8">
       <div className="mx-auto w-full max-w-5xl">

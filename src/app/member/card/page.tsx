@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma";
-import MemberCardClient from "./MemberCardClient";
+import MemberCardClient, { type MemberCardUser } from "./MemberCardClient";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const members = await prisma.user.findMany({
+  const members: MemberCardUser[] = await prisma.user.findMany({
     select: {
       id: true,
       name: true,
@@ -14,5 +14,5 @@ export default async function Page() {
     },
   });
 
-  return <MemberCardClient members={members as any} />;
+  return <MemberCardClient members={members} />;
 }
